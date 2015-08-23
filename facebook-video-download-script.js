@@ -2,9 +2,9 @@
 var LINK_TYPE_SD = 'sd_src_no_ratelimit';
 var LINK_TYPE_HD = 'hd_src_no_ratelimit';
 
-getMyObject = function(html)
+getMyObject = function(doc)
 {
-	var scriptsCollection = document.getElementsByTagName("script");
+	var scriptsCollection = doc.getElementsByTagName("script");
 	var scripts = [];
 	for (var i = scriptsCollection.length - 1; i >= 0; i--) 
 	{
