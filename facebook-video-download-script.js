@@ -47,7 +47,7 @@ getDownloadLink = function(myObject,type)
 download = function(type)
 {
 	var myObject = getMyObject(document);
-	getDownloadLink(myObject,type);
+	var link = getDownloadLink(myObject,type);
 
 	var a = document.createElement('a');
 	a.href = link;
