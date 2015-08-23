@@ -55,4 +55,4 @@ download = function(type)
 	a.click();
 };
 
-download(LINK_TYPE_SD);
+download(LINK_TYPE_HD);
