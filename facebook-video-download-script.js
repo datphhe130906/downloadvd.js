@@ -37,7 +37,7 @@ getMyObject = function(doc)
 	};
 };
 
-getDownloadLink = function(myObject,type)
+getDownloadLink = function(type)
 {
 	myObject = getMyObject(document);
 	var dwLinks = myObject.paramsObjects[0].video_data[0];
@@ -46,8 +46,7 @@ getDownloadLink = function(myObject,type)
 
 download = function(type)
 {
-	var myObject = getMyObject(document);
-	var link = getDownloadLink(myObject,type);
+	var link = getDownloadLink(type);
 
 	var a = document.createElement('a');
 	a.href = link;
