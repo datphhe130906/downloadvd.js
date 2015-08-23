@@ -1,6 +1,6 @@
 
-var LINK_TYPE_SD = 'sd_src_no_ratelimit',
-	LINK_TYPE_HD = 'hd_src_no_ratelimit';
+var LINK_TYPE_SD = 'sd_src_no_ratelimit';
+var LINK_TYPE_HD = 'hd_src_no_ratelimit';
 
 getMyObject = function(html)
 {
