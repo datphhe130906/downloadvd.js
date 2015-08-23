@@ -15,33 +15,33 @@ getMyObject = function(html)
 		};
 	};
 
-    var paramsObjects = [];
+	var paramsObjects = [];
 
-    for (var i = scripts.length - 1; i >= 0; i--) 
-    {
-        var paramsStringsArray = scripts[i].match(/\["params"[^\]]*\]/g);
-        
-        for (var j = paramsStringsArray.length - 1; j >= 0; j--) 
-        {
-            var paramsString = paramsStringsArray[j];
-            var params = JSON.parse(paramsString)[1];
-            var value = decodeURIComponent(params);
+	for (var i = scripts.length - 1; i >= 0; i--) 
+	{
+		var paramsStringsArray = scripts[i].match(/\["params"[^\]]*\]/g);
+		
+		for (var j = paramsStringsArray.length - 1; j >= 0; j--) 
+		{
+			var paramsString = paramsStringsArray[j];
+			var params = JSON.parse(paramsString)[1];
+			var value = decodeURIComponent(params);
 
-            var valueObj = JSON.parse(value);
-            paramsObjects.push( valueObj );
-        };
-    };
+			var valueObj = JSON.parse(value);
+			paramsObjects.push( valueObj );
+		};
+	};
 
-    return { 
-        paramsObjects: paramsObjects,
-    };
+	return { 
+		paramsObjects: paramsObjects,
+	};
 };
 
 getDownloadLink = function(myObject,type)
 {
 	myObject = getMyObject(document);
 	var dwLinks = myObject.paramsObjects[0].video_data[0];
-	return dwLinks[type];	
+	return dwLinks[type];   
 };
 
 download = function(type)
@@ -55,4 +55,4 @@ download = function(type)
 	a.click();
 };
 
-download(LINK_TYPE_HD);
+download(LINK_TYPE_SD);
