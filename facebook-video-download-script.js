@@ -40,7 +40,7 @@ getMyObject = function(doc)
 getDownloadLink = function(type)
 {
 	myObject = getMyObject(document);
-	var dwLinks = myObject.paramsObjects[0].video_data_preference[1];
+	var dwLinks = myObject.paramsObjects[0].video_data_preference[1][0];
 	return dwLinks[type];   
 };
 
