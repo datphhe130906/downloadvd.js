@@ -1,59 +1,51 @@
-
 var LINK_TYPE_SD = 'sd_src_no_ratelimit';
 var LINK_TYPE_HD = 'hd_src_no_ratelimit';
 
-(function downloadVideo (type) {
-	function getMyObject (doc)
-	{
-		var scriptsCollection = doc.getElementsByTagName("script");
-		var scripts = [];
-		for (var i = scriptsCollection.length - 1; i >= 0; i--) 
-		{
-			var script = scriptsCollection[i].innerHTML;
-			if (/video_ids/i.test(script)) 
-			{
-				scripts.push(script);
-			};
-		};
+(function downloadVideo(type) {
+    function getMyObject(doc) {
+        var scriptsCollection = doc.getElementsByTagName("script");
+        var scripts = [];
+        for (var i = scriptsCollection.length - 1; i >= 0; i--) {
+            var script = scriptsCollection[i].innerHTML;
+            if (/video_ids/i.test(script)) {
+                scripts.push(script);
+            };
+        };
 
-		var paramsObjects = [];
+        var paramsObjects = [];
 
-		for (var i = scripts.length - 1; i >= 0; i--) 
-		{
-			var paramsStringsArray = scripts[i].match(/\["params"[^\]]*\]/g);
-			
-			for (var j = paramsStringsArray.length - 1; j >= 0; j--) 
-			{
-				var paramsString = paramsStringsArray[j];
-				var params = JSON.parse(paramsString)[1];
-				var value = decodeURIComponent(params);
+        for (var i = scripts.length - 1; i >= 0; i--) {
+            var paramsStringsArray = scripts[i].match(/\["params"[^\]]*\]/g);
 
-				var valueObj = JSON.parse(value);
-				paramsObjects.push( valueObj );
-			};
-		};
+            for (var j = paramsStringsArray.length - 1; j >= 0; j--) {
+                var paramsString = paramsStringsArray[j];
+                var params = JSON.parse(paramsString)[1];
+                var value = decodeURIComponent(params);
 
-		return { 
-			paramsObjects: paramsObjects,
-		};
-	};
+                var valueObj = JSON.parse(value);
+                paramsObjects.push(valueObj);
+            };
+        };
 
-	function getDownloadLink (type)
-	{
-		myObject = getMyObject(document);
-		var dwLinks = myObject.paramsObjects[0].video_data_preference[1][0];
-		return dwLinks[type];   
-	};
+        return {
+            paramsObjects: paramsObjects,
+        };
+    };
 
-	function download (type)
-	{
-		var link = getDownloadLink(type);
+    function getDownloadLink(type) {
+        myObject = getMyObject(document);
+        var dwLinks = myObject.paramsObjects[0].video_data_preference[1][0];
+        return dwLinks[type];
+    };
 
-		var a = document.createElement('a');
-		a.href = link;
-		a.setAttribute('download','download');
-		a.click();
-	};
+    function download(type) {
+        var link = getDownloadLink(type);
 
-	return download(type);
+        var a = document.createElement('a');
+        a.href = link;
+        a.setAttribute('download', 'download');
+        a.click();
+    };
+
+    return download(type);
 })(LINK_TYPE_SD);
