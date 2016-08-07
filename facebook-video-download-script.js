@@ -26,7 +26,7 @@ var LINK_TYPE_HD = 'hd_src_no_ratelimit';
     };
 
     function getDownloadLink(type) {
-        myObject = getMyObject(document);
+        var myObject = getMyObject(document);
         var dwLinks = myObject.paramsObjects[0].videoData[0];
         return dwLinks[type];
     };
