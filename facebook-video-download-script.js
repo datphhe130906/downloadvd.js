@@ -5,36 +5,29 @@ var LINK_TYPE_HD = 'hd_src_no_ratelimit';
     function getMyObject(doc) {
         var scriptsCollection = doc.getElementsByTagName("script");
         var scripts = [];
+        var regExp = /video_ids/i;
         for (var i = scriptsCollection.length - 1; i >= 0; i--) {
             var script = scriptsCollection[i].innerHTML;
-            if (/video_ids/i.test(script)) {
+            if (regExp.test(script)) {
                 scripts.push(script);
             };
         };
 
-        var paramsObjects = [];
-
-        for (var i = scripts.length - 1; i >= 0; i--) {
-            var paramsStringsArray = scripts[i].match(/\["params"[^\]]*\]/g);
-
-            for (var j = paramsStringsArray.length - 1; j >= 0; j--) {
-                var paramsString = paramsStringsArray[j];
-                var params = JSON.parse(paramsString)[1];
-                var value = decodeURIComponent(params);
-
-                var valueObj = JSON.parse(value);
-                paramsObjects.push(valueObj);
-            };
-        };
+        var data = JSON.parse(scripts[0].match(/\(\).handle\((\{"instances":\[.*\})\);/)[1]);
+        var apiConfigId = data.instances[0][2][0].apiConfig.__m;
+        var paramsObject = data.instances.filter(function(p){
+            return p[0] == apiConfigId; 
+            //return p.length && p[1][0]=='VideoConfig';
+        })[0][2][0];
 
         return {
-            paramsObjects: paramsObjects,
+            paramsObjects: [paramsObject],
         };
     };
 
     function getDownloadLink(type) {
         myObject = getMyObject(document);
-        var dwLinks = myObject.paramsObjects[0].video_data_preference[1][0];
+        var dwLinks = myObject.paramsObjects[0].videoData[0];
         return dwLinks[type];
     };
 
