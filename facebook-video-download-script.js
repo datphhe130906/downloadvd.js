@@ -13,13 +13,10 @@ var LINK_TYPE_HD = 'hd_src_no_ratelimit';
             };
         };
 
-        var data = JSON.parse(scripts[0].match(/\(\).handle\((\{"instances":\[.*\})\);/)[1]);
-        var apiConfigId = data.instances[0][2][0].apiConfig.__m;
-        var paramsObject = data.instances.filter(function(p){
-            return p[0] == apiConfigId; 
-            //return p.length && p[1][0]=='VideoConfig';
-        })[0][2][0];
-
+        var videoData = eval('var videoData='+scripts[0].match(/videoData:(\[\{[^}]*\}\])/)[1]);
+        paramsObject = {
+            videoData: videoData
+        }
         return {
             paramsObjects: [paramsObject],
         };
