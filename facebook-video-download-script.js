@@ -14,7 +14,7 @@ var LINK_TYPE_HD = 'hd_src_no_ratelimit';
         };
 
         var videoData = eval('var videoData='+scripts[0].match(/videoData:(\[\{[^}]*\}\])/)[1]);
-        paramsObject = {
+        var paramsObject = {
             videoData: videoData
         }
         return {
