@@ -13,7 +13,7 @@ var LINK_TYPE_HD = 'hd_src_no_ratelimit';
             };
         };
 
-        var videoData = eval(scripts[0].match(/videoData:(\[\{[^}]*\}\])/)[1]);
+        var videoData = eval(scripts[0].match(/"?videoData"?:(\[\{[^}]*\}\])/)[1]);
         var paramsObject = {
             videoData: videoData
         }
