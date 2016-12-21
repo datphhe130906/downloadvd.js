@@ -13,7 +13,10 @@ var LINK_TYPE_HD = 'hd_src_no_ratelimit';
             };
         };
 
-        var videoData = eval(scripts[0].match(/"?videoData"?:(\[\{[^}]*\}\])/)[1]);
+        var videoData = scripts[0].match(/"?videoData"?:(\[\{[^}]*\}\])/g).map(function(d) {
+            return eval(d.match(/"?videoData"?:(\[\{[^}]*\}\])/)[1])[0];
+        });
+
         var paramsObject = {
             videoData: videoData
         }
@@ -22,14 +25,15 @@ var LINK_TYPE_HD = 'hd_src_no_ratelimit';
         };
     };
 
-    function getDownloadLink(type) {
-        var myObject = getMyObject(document);
-        var dwLinks = myObject.paramsObjects[0].videoData[0];
+    function getDownloadLink(doc, video_id, type) {
+        var myObject = getMyObject(doc);
+        var dwLinks = myObject.paramsObjects[0].videoData.filter(function(video){return video.video_id == video_id;})[0];
         return dwLinks[type];
     };
 
     function download(type) {
-        var link = getDownloadLink(type);
+        var videoId = document.location.href.match(/https?:\/\/www\.facebook\.com\/[^/]+\/videos\/([^/]+)/)[1];
+        var link = getDownloadLink(document, videoId, type);
 
         var a = document.createElement('a');
         a.href = link;
